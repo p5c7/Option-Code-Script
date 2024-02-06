@@ -1,0 +1,24 @@
+﻿type,code,replace,option
+Text,#,Number,
+Select_one,"After preliminary review, do any of the conditions belong to another program",other program condition,
+Select_one,Are there any other non=emergency EC conditions at this location,non emergency condition,
+Select_one,Are there any other pending EC Notifications for this location,Pending EC notifications,
+Select_one,Are there any Invalid FDA,Any Invalid FDA,
+Select_one,Are there any funding discrepancies,Are There Any Funding Descrepancies,
+Select_one,"if yes, Why?",YesWhy_,"Addressed
+No Compelling abornormal or regulatory conditions exist 
+Duplication notification merged
+the work belongs to another progress
+converted to another notifications"
+Text,Which terms were not correctly transferred/merged? ,,"FDAS
+Long Text
+Due Dates"
+Select_one,"if No, Why?",NoWhy_,"Addressed
+No Compelling abornormal or regulatory conditions exist 
+Duplication notification merged
+the work belongs to another progress
+converted to another notifications type insufficient documentation to support cancellation"
+Select_one,Is the Notification,,
+Select_one,Are there any,,
+Select_mulitiple,Which,,
+Select_one,Location,,
