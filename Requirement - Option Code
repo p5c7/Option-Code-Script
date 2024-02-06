@@ -1,0 +1,77 @@
+import re
+import pandas as pd
+import math
+import numpy as np
+
+#Q1 capitalize each word separated by space in the 'given below sample input'
+#Q2 If it is an acronym which is already all caps, keep it as it is. do not  force it into camel case.
+def capitalize_words(input_string):
+    words = input_string.split()
+    capitalized_words = [ word if word.isupper() else word.capitalize() for word in words]
+    result = ' '.join(capitalized_words)
+    #print(result)
+    return result
+
+
+#Q3 remove filler words from the 'sample input '-(need to keep updating this list as more cases come up)
+def remove_filler_words(input_string, filler_words):
+    words = input_string.split()
+    filtered_words = [word for word in words if word.lower() not in filler_words]
+    result = ' '.join(filtered_words)
+    #print(result)
+    return result
+
+# Sample input
+type="Select_one"
+sample_input1 = "Notification # 124556 Are there any Data engineering After preliminary review, do any of the conditions belong to another program 34relies on essential data structures like arrays, hash tables, trees, and graphs. Arrays efficiently handle sequential data manipulation, !hash tables facilitate rapid lookups, updates, and deletions, and Trees ^^ are used for nested  or 6hierarchical data, enabling effective GCS and querying."
+sample_input ="if No, Why?"
+
+data= pd.read_csv("Replace.csv")
+df =pd.DataFrame(data)
+df.replace({np.nan: None}, inplace=True)
+print(sample_input)
+for index, row  in df.iterrows():  
+    if sample_input.__contains__(row['code']) and row['type']=="Text" :
+        sample_input=sample_input.replace(row['code'],row['replace']) 
+    elif sample_input.__contains__(row['code']) and row['type']=="Select_one" and  row['option']!= None :
+         option_flag=1
+         sample_input=sample_input.replace(row['code'],row['replace']) + capitalize_words(row['option'])
+    
+    
+data= pd.read_csv("filling.csv")
+df =pd.DataFrame(data)
+
+type="Select_one"
+for index, row in df.iterrows():
+    if sample_input.__contains__(row['filling']) and row['type']=="Select_one" :
+        sample_input=sample_input.replace(row['filling'],'')
+
+result_with_capitalized_words=capitalize_words(sample_input)
+
+# List of filler words to be removed (you can update this list)
+filler_words_list = ["oops","um", "ah", "hmm", "like", "etc", "alright","Are ther Any", "Which","the", "Have any of the", "Enter the other"]
+
+# Remove filler words from the result with capitalized words
+result_without_fillers = remove_filler_words(result_with_capitalized_words, filler_words_list)
+
+#Q4 Remove all special character including space
+#Q5 concatenate all remaining words
+if  option_flag !=1:
+        result_without_fillers = re.sub(r'[^a-zA-Z0-9]', '', result_without_fillers)
+    #else:
+    #result_without_fillers = re.sub(r'[^a-zA-Z0-9]', '_', result_without_fillers)
+    #result_without_fillers.strip()
+
+    
+
+#Q6 the concatenated word can not start with numeric digits so remove all leading numbers.
+cleaned_string_without_numbers = re.sub(r'\d+', '', result_without_fillers)
+result=cleaned_string_without_numbers
+
+#Q7 save the final word into a new array as sample input code.
+final_word_array = [result]
+
+
+# Print the result
+print("The final output is : ",final_word_array)
+
